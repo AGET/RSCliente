@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Personalizacion para ver la sombre en versiones inferiores a android lollipop-->
+<!--Para anular el efecto cuando se ejecute en una version 5.x >, se incluye otra version del archivo en-->
+<!--la carpeta values-v21, la cual tiene como valor null-->
+<resources>
+    <item name="header_shadow" type="drawable">@drawable/bottom_shadow</item>
+</resources>

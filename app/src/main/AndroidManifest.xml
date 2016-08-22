@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.aldo.aget.rscliente">
+
+    <!-- Red -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+
+    <!--Mensaje-->
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <!---->
+
+    <!--Mapa-->
+    <permission
+        android:name="com.aldo.aget.rscliente.permission.MAPS_RECEIVE" android:protectionLevel="signature" />
+    <uses-permission android:name="com.aldo.aget.rscliente.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+
+    <!--Mapa-->
+
+    <!--android:theme="@style/AppTheme.NoActionBar"-->
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppThemeNoBar"
+        >
+
+        <!--android:theme="@style/AppTheme.NoActionBar"-->
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            >
+
+            <!-- android:theme="@style/AppTheme2"> -->
+            <!-- android:theme="@style/AppTheme.NoActionBar" -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".Vistas.Inicio"
+            android:label="@string/title_activity_inicio"
+            android:theme="@style/AppTheme"/>
+
+        <activity
+            android:name=".Vistas.DetalleGps"
+            android:label="@string/title_activity_etalle_gps"
+            android:theme="@style/AppTheme"/>
+
+
+        <activity
+            android:name=".Mapa"
+            android:label="@string/posicion"></activity>
+
+
+        <receiver android:name=".RecibirSMS">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAxC1h4b6Pysqj8NP_GIn33hFeAyXC5RGQ" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+
+    </application>
+
+</manifest>

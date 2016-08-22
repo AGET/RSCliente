@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".Vistas.DetalleGps"
+    tools:showIn="@layout/activity_detalle_gps">
+
+    <ImageView
+        android:id="@+id/icono_gps"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/img_gps_grande"
+        android:layout_centerVertical="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Imei del Gps"
+        android:id="@+id/txtLblImeiGps"
+        android:paddingStart="20dp"
+        style="@style/Base.DialogWindowTitle.AppCompat"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/icono_gps" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_marginTop="15dp"
+        android:paddingStart="20dp"
+        android:id="@+id/txtImeiGps"
+        android:layout_below="@+id/txtLblImeiGps"
+        android:layout_toEndOf="@+id/icono_gps"
+        android:hint="&quot;identificador&quot;"
+        style="@style/Base.TextAppearance.AppCompat.Subhead"
+         />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Descripcion"
+        android:id="@+id/txtLblDescripcion"
+        android:paddingStart="10dp"
+        style="@style/Base.DialogWindowTitle.AppCompat"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/txtImeiGps"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:paddingStart="10dp"
+        android:ems="10"
+        android:textSize="20dp"
+        android:id="@+id/edtDescripcion"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/txtLblDescripcion"
+        android:editable="false"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:id="@+id/imageView"
+        android:background="@drawable/banner3"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignEnd="@+id/txtLblImeiGps" />
+
+</RelativeLayout>

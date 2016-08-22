@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/xml_mapa"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical"
+        tools:context=".Mapa">
+    <!--
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Mapa"
+
+
+    class="com.google.android.gms.maps.SupportMapFragment"
+
+    android:name="com.google.android.gms.maps.SupportMapFragment"
+    --><!--<fragment
+        android:id="@+id/map"
+        class="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />-->
+
+    <fragment
+        android:id="@+id/map"
+        class="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Acceso al mapa restringido"
+        android:layout_gravity="center|center"
+        android:id="@+id/txtLblMapa"
+        style="@style/Base.DialogWindowTitle.AppCompat" />
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_mapa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:background="@color/colorA"
+        android:src="@android:drawable/ic_menu_close_clear_cancel" />
+
+
+</android.support.design.widget.CoordinatorLayout>

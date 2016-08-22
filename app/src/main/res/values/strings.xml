@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">RSCliente</string>
+    <string name="action_settings">Settings</string>
+
+    <!--Menu-->
+    <string name="cambiar_contrase_na">Cambiar contraseña</string>
+
+    <string name="txt_inicio">Rastreador Satelital</string>
+    <string name="button_login">Iniciar</string>
+    <string name="button_signup">Cancelar</string>
+    <string name="button_confirm_login">Confirmar</string>
+    <string name="button_cancel_login">Cancelar</string>
+    <string name="button_confirm_signup">Confirm Sign Up</string>
+    <string name="button_cancel_signup">Cancel Sign Up</string>
+    <string name="edit_username">Correo</string>
+    <string name="edit_password">Clave</string>
+    <string name="btn_recuperar">Recuperar clave</string>
+    <string name="title_activity_inicio">Inicio</string>
+    <string name="title_activity_etalle_gps">DetalleGps</string>
+
+    <string name="posicion">Posicion</string>
+
+    <string name="lblImei">Imei</string>
+    <string name="lblNumero">Numero</string>
+    <string name="lblDescripcion">Descripcion</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--El valor nulo es para que en versiones con lollipoop no se muestre la imagen de sombra, ya que lollipop-->
+<!--la pone por defecto-->
+<resources>
+    <item name="header_shadow" type="drawable">@null</item>
+</resources>

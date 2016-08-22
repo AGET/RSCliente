@@ -32,7 +32,6 @@ public class DetalleGps extends AppCompatActivity {
     String numero = "";
     String descripcion = "";
 
-
     TextView txtImeiGps;
     EditText edtDescripcion;
     public FloatingActionButton fab_obtnerCooredenada,fab_mapa;

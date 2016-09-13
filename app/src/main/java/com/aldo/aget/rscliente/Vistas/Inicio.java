@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.app.Activity;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -25,12 +28,13 @@ import com.aldo.aget.rscliente.Configuracion.GPS;
 import com.aldo.aget.rscliente.Control.ManipulacionBD;
 import com.aldo.aget.rscliente.Control.Receptor;
 import com.aldo.aget.rscliente.Control.SQLHelper;
+import com.aldo.aget.rscliente.MainActivity;
 import com.aldo.aget.rscliente.R;
 import com.aldo.aget.rscliente.ServicioWeb.Peticion;
 
 import java.util.ArrayList;
 
-public class Inicio extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class Inicio extends AppCompatActivity implements AdapterView.OnItemClickListener, DialogoConfirmacion.OnConfirmacionDialogListener {
 
     static ListView lista;
     static ArrayAdapter adaptador;
@@ -44,10 +48,14 @@ public class Inicio extends AppCompatActivity implements AdapterView.OnItemClick
 
     Receptor receptor;
 
+    MenuItem menuAcercaDe,menuCerrarSesion,menuCambiarContrase_na;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio);
+
+        Configuracion.coordinatorLayoutInicio = (CoordinatorLayout) findViewById(R.id.rootInicio);
 
         //App bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.appbar);
@@ -68,10 +76,54 @@ public class Inicio extends AppCompatActivity implements AdapterView.OnItemClick
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_inicio, menu);
+        this.menuCambiarContrase_na = menu.findItem(R.id.cambiar_contrase_na);
+        this.menuCerrarSesion = menu.findItem(R.id.cerrar_sesion);
+        this.menuAcercaDe = menu.findItem(R.id.acerca_de);
+
+        menuCambiarContrase_na.setVisible(true);
+        menuAcercaDe.setVisible(true);
+        menuCerrarSesion.setVisible(true);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.cambiar_contrase_na:
+                mostrarDialogoCambiarPass();
+                break;
+            case R.id.cerrar_sesion:
+                cerrarSesion();
+                break;
+
+            case R.id.acerca_de:
+                mostrarDialogoacercaDe();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void mostrarDialogoCambiarPass(){
+        new DialogoClave().show(getSupportFragmentManager(), "DialogoClave");
+
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         IntentFilter filtro = new IntentFilter(Configuracion.INTENT_USUARIO_LISTA_GPS);
         LocalBroadcastManager.getInstance(this).registerReceiver(receptor, filtro);
+
+        IntentFilter filtro2 = new IntentFilter(Configuracion.INTENT_USUARIO_CAMBIAR_CLAVE);
+        LocalBroadcastManager.getInstance(this).registerReceiver(receptor, filtro2);
+
+        IntentFilter filtro3 = new IntentFilter(Configuracion.INTENT_INICIO_RECUPERAR_CLAVE);
+        LocalBroadcastManager.getInstance(this).registerReceiver(receptor, filtro3);
+
     }
 
     @Override
@@ -99,8 +151,7 @@ public class Inicio extends AppCompatActivity implements AdapterView.OnItemClick
         //Alternativa 1:
         String opcionSeleccionada =
                 (String)((GPS) parent.getItemAtPosition(position)).getId();
-        Snackbar.make(view, "Ha marcado el item " + position + " " + opcionSeleccionada, Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+        //Snackbar.make(view, "Ha marcado el item " + position + " " + opcionSeleccionada, Snackbar.LENGTH_LONG).setAction("Action", null).show();
 
         Log.v("AGET-idSeleccionado", opcionSeleccionada);
         mostrarDetalleGPs(
@@ -236,5 +287,38 @@ public class Inicio extends AppCompatActivity implements AdapterView.OnItemClick
         inten.putExtra(Configuracion.COLUMNA_GPS_NUMERO, numero);
         inten.putExtra(Configuracion.COLUMNA_GPS_DESCRIPCION, descripcion);
         Configuracion.context.startActivity(inten);
+    }
+
+    public void mostrarDialogoacercaDe() {
+        new DialogoConfirmacion("Información", "  Tecnológico Nacional de México\n" +
+                "Instituto Tecnológico de Chilpancingo\n\n" +
+                "Sistema de residencia profecional\n" +
+                "Realizado por:\n\n" +
+                "Alumno: \n" +
+                "Aldo Gamaliel Estrada Tepec\n\n" +
+                "Con asesoria de: \n" +
+                "M.C. Jose Mario Martinez Castro", "Cerrar", "").show(getSupportFragmentManager(), "SimpleDialog");
+    }
+
+    @Override
+    public void onPossitiveButtonClick() {
+        Log.v("AGET-DIALOGO","ACEPTAR");
+
+    }
+
+    @Override
+    public void onNegativeButtonClick() {
+        Log.v("AGET-DIALOGO","CANCELAR");
+    }
+
+    public void cerrarSesion(){
+        ManipulacionBD managerBD = new ManipulacionBD(Configuracion.context);
+
+        managerBD.eliminarTodo(SQLHelper.TABLA_GPS);
+        managerBD.eliminarTodo(SQLHelper.TABLA_USUARIOS);
+
+        Intent inten = new Intent(this, MainActivity.class);
+        startActivity(inten);
+        finish();
     }
 }

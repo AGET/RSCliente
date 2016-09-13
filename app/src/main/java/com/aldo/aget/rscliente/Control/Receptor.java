@@ -33,6 +33,7 @@ public class Receptor extends BroadcastReceiver {
         Log.v("AGET-intenConf", Configuracion.INTENT_MAINACTIVITY_LOGIN);
         switch (intent.getAction()) {
             case Configuracion.INTENT_MAINACTIVITY_LOGIN:
+                MainActivity.mostrarProgress(false);
                 Log.v("AGET", "BROAD RECIBIDO LOGIN en Usuarios");
                 String mensaje = intent.getStringExtra(Utilidades.EXTRA_MENSAJE);
                 Boolean resultado = intent.getBooleanExtra(Utilidades.EXTRA_RESULTADO, false);
@@ -42,11 +43,12 @@ public class Receptor extends BroadcastReceiver {
                     guardarDatosUsuario();
                     mostrarInicio();
                 } else if (mensaje.equalsIgnoreCase("La empresa no esta habilitada")) {
-                    mostrarMensaje(mensaje);
+                    mostrarMensaje(mensaje,Configuracion.coordinatorLayout);
                 } else if (mensaje.equalsIgnoreCase("Datos incorrectos")) {
                     cantidadIntentos++;
-                    mostrarMensaje(mensaje);
+                    mostrarMensaje(mensaje,Configuracion.coordinatorLayout);
                     if (cantidadIntentos == 3) {
+                        cantidadIntentos = 0;
                         MainActivity.mostrarRecuperarClave();
                     }
                 }
@@ -64,7 +66,7 @@ public class Receptor extends BroadcastReceiver {
                     mostrarInicio();
                 } else if (mensaje.equalsIgnoreCase("La empresa no esta habilitada") || mensaje.equalsIgnoreCase("Datos incorrectos")) {
                     cambiarEstado();
-                    mostrarMensaje(mensaje);
+                    mostrarMensaje(mensaje,Configuracion.coordinatorLayout);
 
                 }
 
@@ -84,7 +86,34 @@ public class Receptor extends BroadcastReceiver {
                 Log.v("AGET", "BROAD RECIBIDO GPS de Usuarios");
                 mensaje = intent.getStringExtra(Utilidades.EXTRA_MENSAJE);
                 if(mensaje.equalsIgnoreCase("Registro con exito!")){
-                    mostrarMensaje("Coordenadas enviadas");
+                    mostrarMensaje("Coordenadas enviadas",Configuracion.coordinatorLayout);
+                }
+                break;
+            case Configuracion.INTENT_MAINACTIVITY_RECUPERAR:
+                Log.v("AGET", "BROAD RECIBIDO de recuperacion");
+                mensaje = intent.getStringExtra(Utilidades.EXTRA_MENSAJE);
+                if(mensaje.equalsIgnoreCase("correo enviado")){
+                    mostrarMensaje("Un mensaje se ha enviado a su correo con la clave",Configuracion.coordinatorLayout);
+                }else{
+                    mostrarMensaje("Ha ocurrido un error, intentelo nuevamente",Configuracion.coordinatorLayout);
+                }
+                break;
+            case Configuracion.INTENT_USUARIO_CAMBIAR_CLAVE:
+                mensaje = intent.getStringExtra(Utilidades.EXTRA_MENSAJE);
+                if(mensaje.equalsIgnoreCase("Registro actualizado correctamente")){
+                    actualizarClaveLocal();
+                    mostrarMensaje("Se ha modificado la clave",Configuracion.coordinatorLayoutInicio);
+                }else if(mensaje.equalsIgnoreCase("El usuario al que intentas acceder no existe")){
+                    mostrarMensaje("No se modificado la clave",Configuracion.coordinatorLayoutInicio);
+                }
+                break;
+            case Configuracion.INTENT_INICIO_RECUPERAR_CLAVE:
+                Log.v("AGET", "BROAD RECIBIDO de recuperacion");
+                mensaje = intent.getStringExtra(Utilidades.EXTRA_MENSAJE);
+                if(mensaje.equalsIgnoreCase("correo enviado")){
+                    mostrarMensaje("Un mensaje se ha enviado a su correo con la clave",Configuracion.coordinatorLayoutInicio);
+                }else{
+                    mostrarMensaje("Ha ocurrido un error, intentelo nuevamente",Configuracion.coordinatorLayoutInicio);
                 }
                 break;
         }
@@ -103,9 +132,9 @@ public class Receptor extends BroadcastReceiver {
         }
     }
 
-    public void mostrarMensaje(String mensaje) {
+    public void mostrarMensaje(String mensaje,View vista) {
         //Snackbar.make(Configuracion.parentLayout, mensaje, Snackbar.LENGTH_SHORT).show();
-        Snackbar snackbar = Snackbar.make(Configuracion.coordinatorLayout, mensaje, Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(vista, mensaje, Snackbar.LENGTH_LONG);
         View view = snackbar.getView();
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) view.getLayoutParams();
         params.gravity = Gravity.TOP;
@@ -170,6 +199,17 @@ public class Receptor extends BroadcastReceiver {
         }else{
             //return false;
         }
+    }
+
+    public void actualizarClaveLocal(){
+        ManipulacionBD managerBD = new ManipulacionBD(Configuracion.context.getApplicationContext());
+
+        String[] valorFiltro = {SQLHelper.COLUMNA_USUARIO_ID};
+        String idUsuario= (String) (managerBD.obtenerDatos(SQLHelper.TABLA_USUARIOS, valorFiltro, null, null)).get(0);
+
+        String[] valorFiltro2 = {SQLHelper.COLUMNA_USUARIO_ID};
+        managerBD.actualizarUnDato(SQLHelper.TABLA_USUARIOS,SQLHelper.COLUMNA_USUARIO_CONTRASE_NA,Configuracion.claveAux,
+                SQLHelper.COLUMNA_USUARIO_ID,idUsuario);
     }
 
 }

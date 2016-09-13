@@ -51,13 +51,13 @@ public class RecibirSMS extends BroadcastReceiver {
                 mensaje += smss[i].getMessageBody().toString();
                 cadenaMensaje += "\n";
             }
-            if ( buscarNumeroEnBD(numeroRemitente) ) {
+            if (buscarNumeroEnBD(numeroRemitente)) {
                 char caracteres[] = mensaje.toCharArray();
                 double lat = 0;
                 lat = getLatitud(caracteres);
                 double lon = 0;
                 lon = getLongitud(caracteres);
-                if (lat != 0 && lon != 0) {
+                if ((lat != 0 || lat != 0.0) && lon != 0 || lon != 0.0) {
                     Intent i = new Intent().setClass(contexto, Mapa.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -78,6 +78,7 @@ public class RecibirSMS extends BroadcastReceiver {
 
 // Launch the new activity and add the additional flags to the intent
                     contexto.getApplicationContext().startActivity(i);
+                    Log.v("AGET-MAPA","MAPA LANZADO");
 
                 }
             }
@@ -148,7 +149,12 @@ public class RecibirSMS extends BroadcastReceiver {
             }
         }
         Log.v("suma", "" + suma);
-        latid = Double.parseDouble(suma);
+        try {
+            latid = Double.parseDouble(suma);
+
+        } catch (NumberFormatException ex) {
+            latid = 0.0;
+        }
         return latid;
     }
 
@@ -174,7 +180,12 @@ public class RecibirSMS extends BroadcastReceiver {
             }
         }
         Log.v("suma", "" + suma);
-        longitud = Double.parseDouble(suma);
+        try {
+            longitud = Double.parseDouble(suma);
+        } catch (NumberFormatException ex) {
+            longitud = 0.0;
+        }
+
         return longitud;
     }
 
@@ -209,10 +220,10 @@ public class RecibirSMS extends BroadcastReceiver {
         managerBD = new ManipulacionBD(contexto.getApplicationContext());
         String[] datos = {SQLHelper.COLUMNA_GPS_NUMERO};
         String[] valor = {numRemit};
-        if( managerBD.obtenerDatos(SQLHelper.TABLA_GPS, datos, SQLHelper.COLUMNA_GPS_NUMERO, valor) != null){
-            numero = (String)(managerBD.obtenerDatos(SQLHelper.TABLA_GPS, datos, SQLHelper.COLUMNA_GPS_NUMERO, valor)).get(0);
+        if (managerBD.obtenerDatos(SQLHelper.TABLA_GPS, datos, SQLHelper.COLUMNA_GPS_NUMERO, valor) != null) {
+            numero = (String) (managerBD.obtenerDatos(SQLHelper.TABLA_GPS, datos, SQLHelper.COLUMNA_GPS_NUMERO, valor)).get(0);
             return true;
-        }else{
+        } else {
             return false;
         }
     }

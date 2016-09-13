@@ -49,6 +49,14 @@ public class ManipulacionBD {
         return true;
     }
 
+    public boolean actualizarUnDato(String tabla, String columna, String dato, String condicion, String valorCondicion) {
+        abrirEscrituraBD();
+        ContentValues valores = new ContentValues();
+        valores.put(columna, dato);
+        db.update(tabla, valores, condicion+"="+valorCondicion, null);
+        return true;
+    }
+
     public ArrayList obtenerDatos(String tabla, String[] campos, String where, String[] datosWhere) {
         abrirEscrituraBD();
         ArrayList datosCursor = new ArrayList();

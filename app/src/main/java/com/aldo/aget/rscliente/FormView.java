@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.aldo.aget.rscliente.Configuracion.Configuracion;
+import com.aldo.aget.rscliente.ServicioWeb.Peticion;
+
 
 /**
  * Created by kobe.gong on 2015/7/17.
@@ -16,7 +19,7 @@ import android.widget.LinearLayout;
 public class FormView extends LinearLayout {
 
     private EditText edit1, edit2;
-    public Button btn_recuperar;
+    public Button btn_recuperar,btn_intentar_iniciar;
     public TextInputLayout mcrCampoCorreo,mcrCampoClave;
     public View viewClave;
 
@@ -42,13 +45,16 @@ public class FormView extends LinearLayout {
         edit2 = (EditText) findViewById(R.id.edt_clave);
 
         //Borrar
-        edit1.setText("aldo_get@hotmail.com");
-        edit2.setText("123456");
+//        edit1.setText("aldo_get@hotmail.com");
+//        edit2.setText("123456");
         btn_recuperar = (Button) findViewById(R.id.btn_recuperar);
+        btn_intentar_iniciar = (Button) findViewById(R.id.btn_intentar_iniciar);
+
         viewClave = (View)findViewById(R.id.viewClave);
 
         mcrCampoCorreo = (TextInputLayout) findViewById(R.id.mcr_edt_correo);
         mcrCampoClave = (TextInputLayout) findViewById(R.id.mcr_edt_clave);
+
     }
 
     @Override
@@ -83,4 +89,6 @@ public class FormView extends LinearLayout {
     public void setErrorMcrCompoClave(String s){
         mcrCampoClave.setError(s);
     }
+
+
 }

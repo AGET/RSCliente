@@ -43,7 +43,7 @@ public class Peticion extends AsyncTask<String, Void, JSONObject> {
     String tabla;
     String intent = "";
 
-    boolean sonTablas, obtener = true;
+    boolean sonTablas, obtener = true,login = false;
 
     public Peticion(Context context, String receptor, String[] nombresColumnasFiltro, String[] datosColumnasFiltro, String tabla, String[] columnas_a_recuperar, boolean sonTabla) {
         this.columnasFiltro = nombresColumnasFiltro;
@@ -59,6 +59,11 @@ public class Peticion extends AsyncTask<String, Void, JSONObject> {
 
         datos = new ArrayList();
         intent = receptor;
+        if (receptor.equalsIgnoreCase(Configuracion.INTENT_MAINACTIVITY_COMPROBAR_LOGIN)){
+            login = true;
+        }else{
+            login = false;
+        }
     }
 
     @Override

@@ -85,7 +85,16 @@
         android:id="@+id/btn_recuperar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="65dp"
+        android:layout_marginTop="35dp"
         android:text="@string/btn_recuperar"
+        />
+
+    <Button
+        android:id="@+id/btn_intentar_iniciar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="Intentar de nuevo"
         />
 </merge>

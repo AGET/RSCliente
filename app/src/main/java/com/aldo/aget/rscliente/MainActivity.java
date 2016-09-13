@@ -3,14 +3,19 @@ package com.aldo.aget.rscliente;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -23,6 +28,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.aldo.aget.rscliente.Configuracion.Configuracion;
@@ -38,6 +44,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import android.widget.ProgressBar;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -71,6 +78,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Configuracion.COLUMNA_USUARIO_CORREO, Configuracion.COLUMNA_USUARIO_CONTRASE_NA, Configuracion.COLUMNA_DEPARTAMENTO_ID, Configuracion.COLUMNA_USUARIO_NOMBRE_DEPARTAMENTO,
             Configuracion.COLUMNA_EMPRESA_ID, Configuracion.COLUMNA_USUARIO_NOMBRE_EMPRESA, Configuracion.COLUMNA_EMPRESA_STATUS
     };
+
+    static ProgressBar progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +128,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             comprobarVigencia();
             //mostrarInicio(datosCursor);
         }
+        formView.btn_recuperar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.peticionRecPass();
+            }
+        });
+
+        formView.btn_intentar_iniciar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.intentarIniciarSesion();
+            }
+        });
+
+        progress = (ProgressBar)findViewById(R.id.progress);
+
     }
 
     @Override
@@ -159,6 +184,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 formView.setTranslationY(-1 * delta);
             }
         });
+
     }
 
     private void initView() {
@@ -214,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         videoFile = getFileStreamPath(VIDEO_NAME);
         if (!videoFile.exists())
-            throw new RuntimeException("video file has problem, are you sure you have welcome_video.mp4 in res/raw folder?");
+            throw new RuntimeException("problema en el archivo de video, en res/raw");
         return videoFile;
     }
 
@@ -227,6 +253,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         IntentFilter filtro2 = new IntentFilter(Configuracion.INTENT_MAINACTIVITY_COMPROBAR_LOGIN);
         LocalBroadcastManager.getInstance(this).registerReceiver(receptor, filtro2);
+
+        IntentFilter filtro3 = new IntentFilter(Configuracion.INTENT_MAINACTIVITY_RECUPERAR);
+        LocalBroadcastManager.getInstance(this).registerReceiver(receptor, filtro3);
+
+
     }
 
     @Override
@@ -266,6 +297,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 formView.animate().translationY(0).alpha(1).setDuration(500).start();
                 formView.btn_recuperar.setVisibility(View.INVISIBLE);
+                formView.btn_intentar_iniciar.setVisibility(View.INVISIBLE);
+
                 if (view == buttonLeft) {
                     inputType = InputType.LOGIN;
                     buttonLeft.setText(R.string.button_confirm_login);
@@ -290,7 +323,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         formView.setErrorMcrCompoClave("La clave es requerida");
                     } else {
                         tipoPeticion = "post";
-                        peticionLogin(correo,clave);
+                        if(estaConectado()){
+                            mostrarProgress(true);
+                            peticionLogin(correo,clave);
+
+                        }
                     }
                 } else if (view == buttonRight) {
                     formView.setEdtCorreo("");
@@ -316,6 +353,68 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /*******************/
+
+    protected Boolean estaConectado(){
+        if(conectadoWifi()){
+            //showAlertDialog(MainActivity.this, "Tu Dispositivo tiene Conexion a Wifi.", true);
+            return true;
+        }else{
+            if(conectadoRedMovil()){
+                //showAlertDialog(MainActivity.this, "Tu Dispositivo tiene Conexion Movil.", true);
+                return true;
+            }else{
+                showAlertDialog(MainActivity.this,
+                        "El dispositivo no tiene conexion a internet.", false);
+                return false;
+            }
+        }
+    }
+    public void showAlertDialog(Context cnt,String mensaje, boolean x){
+        Toast.makeText(MainActivity.this, mensaje, Toast.LENGTH_SHORT).show();
+    }
+    /*public void showAlertDialog(Context context, String title, String message, Boolean status) {
+        AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+        alertDialog.setTitle(title);
+        alertDialog.setMessage(message);
+        //alertDialog.setIcon((status) ? R.drawable.success : R.drawable.fail);
+        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        alertDialog.show();
+    }*/
+
+    protected Boolean conectadoRedMovil(){
+        ConnectivityManager connectivity = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivity != null) {
+            NetworkInfo info = connectivity.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+            if (info != null) {
+                if (info.isConnected()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    protected Boolean conectadoWifi(){
+        ConnectivityManager connectivity = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivity != null) {
+            NetworkInfo info = connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            if (info != null) {
+                if (info.isConnected()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /*******************/
+
     enum InputType {
         NONE, LOGIN, SIGN_UP;
     }
@@ -329,11 +428,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public static void mostrarRecuperarClave() {
-        formView.mcrCampoClave.setVisibility(View.INVISIBLE);
+        formView.mcrCampoClave.setVisibility(View.GONE);
         formView.btn_recuperar.setVisibility(View.VISIBLE);
-        formView.viewClave.setVisibility(View.INVISIBLE);
-        buttonLeft.setVisibility(View.INVISIBLE);
-        buttonRight.setVisibility(View.INVISIBLE);
+        formView.btn_intentar_iniciar.setVisibility(View.VISIBLE);
+        formView.viewClave.setVisibility(View.GONE);
+        buttonLeft.setVisibility(View.GONE);
+        buttonRight.setVisibility(View.GONE);
     }
 
     public void cargarpantalla(){
@@ -394,5 +494,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ArrayList comprobandoUsuario = existenDatos();
         peticionLoginVigencia(comprobandoUsuario.get(3).toString(),comprobandoUsuario.get(4).toString());
     }
+
+    public static void peticionRecPass(){
+
+        String[] columnasFiltro = {Configuracion.COLUMNA_USUARIO_CORREO};
+        String[] valorFiltro = {formView.getEdtCorreo()};
+
+        new Peticion(Configuracion.context, Configuracion.INTENT_MAINACTIVITY_RECUPERAR, columnasFiltro, valorFiltro, Configuracion.TABLA_CORREO, null, false)
+                .execute(Configuracion.PETICION_RECUPERAR_CLAVE, "post");
+    }
+
+    public static void mostrarProgress(boolean mostrar) {
+        progress.setVisibility(mostrar ? View.VISIBLE : View.GONE);
+    }
+
+    public static void intentarIniciarSesion(){
+        formView.mcrCampoClave.setVisibility(View.VISIBLE);
+        formView.btn_recuperar.setVisibility(View.GONE);
+        formView.btn_intentar_iniciar.setVisibility(View.GONE);
+        formView.viewClave.setVisibility(View.VISIBLE);
+        buttonLeft.setVisibility(View.VISIBLE);
+        buttonRight.setVisibility(View.VISIBLE);
+    }
+
 
 }

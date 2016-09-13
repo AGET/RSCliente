@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:padding="@dimen/dialog_body">
+
+
+    <TextView
+        android:id="@+id/info_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:paddingBottom="@dimen/padding_between"
+        android:paddingTop="@dimen/padding_between"
+        android:text="@string/info_cambiar_clave"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <!--<Button-->
+        <!--android:id="@+id/crear_boton"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/info_text"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:paddingBottom="@dimen/button_padding"-->
+        <!--android:paddingTop="@dimen/button_padding"-->
+        <!--android:text="crear_boton"-->
+        <!--android:textColor="@android:color/white" />-->
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/info_text"
+        android:layout_marginBottom="@dimen/padding_between"
+        android:layout_marginTop="@dimen/padding_between"
+        android:background="#C8C9CB" />
+
+    <EditText
+        android:id="@+id/edt_clave_anterior"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/divider"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/normal_padding"
+        android:layout_marginTop="@dimen/normal_padding"
+        android:background="@drawable/edit_text_border"
+        android:ems="10"
+        android:hint="@string/clave_anterior"
+        android:inputType="textPersonName"
+        android:padding="@dimen/edit_text_padding"
+        android:textSize="@dimen/tam_texto"
+        android:textAppearance="?android:attr/password" />
+
+    <EditText
+        android:id="@+id/edt_nueva_clave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edt_clave_anterior"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/normal_padding"
+        android:layout_marginTop="@dimen/normal_padding"
+        android:background="@drawable/edit_text_border"
+        android:ems="10"
+        android:hint="@string/clave_nueva"
+        android:inputType="textPassword"
+        android:padding="@dimen/edit_text_padding"
+        android:textSize="@dimen/tam_texto"
+        android:textAppearance="?android:attr/password" />
+
+    <EditText
+        android:id="@+id/edt_confirmar_clave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edt_nueva_clave"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/padding_between"
+        android:layout_marginTop="@dimen/normal_padding"
+        android:background="@drawable/edit_text_border"
+        android:ems="10"
+        android:hint="@string/confimaicon_clave"
+        android:inputType="textPassword"
+        android:padding="@dimen/edit_text_padding"
+        android:textSize="@dimen/tam_texto"
+        android:textAppearance="?android:attr/password" />
+
+    <TextView
+        android:id="@+id/txt_aviso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/edt_confirmar_clave"
+        android:layout_alignStart="@+id/edt_confirmar_clave"
+        android:layout_below="@+id/edt_confirmar_clave"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/txt_olvidar_clave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/edt_confirmar_clave"
+        android:layout_alignRight="@+id/edt_confirmar_clave"
+        android:layout_below="@+id/txt_aviso"
+        android:paddingTop="@dimen/padding_between"
+        android:text="@string/olvidaste_clave"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <Button
+        android:id="@+id/btn_cambiar_clave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="@dimen/button_padding"
+        android:paddingTop="@dimen/button_padding"
+        android:text="@string/cambiar"
+        android:textColor="@android:color/white" />
+</RelativeLayout>

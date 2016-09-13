@@ -13,4 +13,17 @@
 
     <dimen name="height">56dp</dimen>
     <dimen name="height_double">112dp</dimen>
+
+
+    <!--Dialogo-->
+
+    <!-- Medidas -->
+    <dimen name="dialog_body">24dp</dimen>
+    <dimen name="padding_between">20dp</dimen>
+    <dimen name="edit_text_padding">16dp</dimen>
+    <dimen name="normal_padding">8dp</dimen>
+    <dimen name="button_padding">24dp</dimen>
+    <dimen name="tam_texto">12dp</dimen>
+
+
 </resources>

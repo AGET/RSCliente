@@ -36,7 +36,7 @@ public class DetalleGps extends AppCompatActivity {
     EditText edtDescripcion;
     public FloatingActionButton fab_obtnerCooredenada,fab_mapa;
 
-    MenuItem menuCambiarContrase_na;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,38 +73,16 @@ public class DetalleGps extends AppCompatActivity {
         });
 
 
-        fab_mapa= (FloatingActionButton) findViewById(R.id.fab_mapa);
-        fab_mapa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mostrarMapa();
-            }
-        });
+//        fab_mapa= (FloatingActionButton) findViewById(R.id.fab_mapa);
+//        fab_mapa.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mostrarMapa();
+//            }
+//        });
 
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_inicio, menu);
-        this.menuCambiarContrase_na = menu.findItem(R.id.cambiar_contrase_na);
-        // Verificación de visibilidad acción eliminar
-//        if (idEmpresa != null) {
-        menuCambiarContrase_na.setVisible(true);
-//        }
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.cambiar_contrase_na:
-                mostrarDialogoCambiarPass();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     public void obtener(String numero) {
         try {
@@ -129,9 +107,7 @@ public class DetalleGps extends AppCompatActivity {
         }
     }
 
-    public void mostrarDialogoCambiarPass(){
 
-    }
 
     public void mostrarMapa(){
         Intent inten = new Intent(this, Mapa.class);
@@ -145,3 +121,35 @@ public class DetalleGps extends AppCompatActivity {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+

@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">RSCliente</string>
     <string name="action_settings">Settings</string>
+    <string name="action_cambiar_clave">Cambiar contraseña</string>
+    <string name="action_cerrar_sesion">Cerrar Sesion</string>
+    <string name="action_acerca_de">Acerca de</string>
 
     <!--Menu-->
     <string name="cambiar_contrase_na">Cambiar contraseña</string>
@@ -23,4 +26,14 @@
     <string name="lblImei">Imei</string>
     <string name="lblNumero">Numero</string>
     <string name="lblDescripcion">Descripcion</string>
+
+    <!--Dialogo cambiar clave-->
+    <string name="info_cambiar_clave">Para cambiar su clave introdusca la anterior y la nueva clave
+        asi como su confirmacion, recuerde que la clave por defecto es 123 </string>
+    <string name="clave_anterior">Clave actual</string>
+    <string name="clave_nueva">Clave nueva</string>
+    <string name="confimaicon_clave">Confirme la nueva clave</string>
+    <string name="olvidaste_clave">Olvide mi contraseña</string>
+    <string name="cambiar">Cambiar clave</string>
+
 </resources>

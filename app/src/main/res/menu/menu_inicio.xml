@@ -3,14 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.aldo.aget.rscliente.MainActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/cambiar_contrase_na"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/action_cambiar_clave"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/cambiar_contrase_na"
+        android:id="@+id/cerrar_sesion"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/action_cerrar_sesion"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/acerca_de"
+        android:orderInCategory="100"
+        android:title="@string/action_acerca_de"
+        app:showAsAction="never" />
+
+
 </menu>

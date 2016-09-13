@@ -19,7 +19,9 @@ public class Configuracion extends Activity {
     public static Inicio contextInicio = null;
     public static View parentLayout = null;
     public static CoordinatorLayout coordinatorLayout = null;
-    public static final String SERVIDOR = "http://192.168.0.100";
+    public static CoordinatorLayout coordinatorLayoutInicio = null;
+    public static String claveAux = "";
+    public static final String SERVIDOR = "http://rastreosatelital.esy.es";
     //public static final String SERVIDOR = "http://192.168.2.140";
     //public static final String SERVIDOR = " http://aldogamaliel.byethost16.com";
     //http://aldogamaliel.byethost16.com/api.rs.com/v1/gps/listarVarios
@@ -29,12 +31,16 @@ public class Configuracion extends Activity {
 
     public static final String PETICION_MAINACTIVITY_LOGIN = SERVIDOR + "/api.rs.com/v1/usuarios/login";
     public static final String PETICION_ENLACE_MODIFICAR_ELIMINAR = SERVIDOR + "/api.rs.com/v1/enlace/";
+    public static final String PETICION_RECUPERAR_CLAVE = SERVIDOR + "/api.rs.com/v1/correo/recuperarClave";
 
     //PETICION COORDENADAS
     public static final String PETICION_COORDENADAS_REGISTRO = SERVIDOR + "/api.rs.com/v1/coordenadas/registro";
 
     //USUARIO
     public static final String PETICION_USUARIO_LISTAR_GPS = SERVIDOR + "/api.rs.com/v1/usuarios/listarGpsDeUsuario";//gps enlazados de un usuario
+    public static final String PETICION_USUARIO_CAMBIAR_CLAVE = SERVIDOR + "/api.rs.com/v1/usuarios/cambiarClave";
+    public static final String PETICION_USUARIO_EDITAR_ELIMINAR = SERVIDOR + "/api.rs.com/v1/usuarios/";
+
 
 
     //RECEPTORES
@@ -42,9 +48,13 @@ public class Configuracion extends Activity {
     public static final String INTENT_MAINACTIVITY_COMPROBAR_LOGIN = "com.aldo.aget.rscliente.Vistas.Comprobar.Login";
     public static final String INTENT_USUARIO_LISTA_GPS = "com.aldo.aget.rscliente.Vistas.Usuario.ListaGPS";
     public static final String INTENT_GESTION_USUARIO_REGISTRO_ENLACE = "com.aldo.aget.rscliente.Vistas.GestionUsuario.Registro.Enlace";
+    public static final String INTENT_MAINACTIVITY_RECUPERAR = "com.aldo.aget.rscliente.Vistas.Login.recuperar.pass";
+    public static final String INTENT_USUARIO_CAMBIAR_CLAVE = "com.aldo.aget.rscliente.Cambiar.Clave";
 
     public static final String INTENT_USUARIO_ENVIAR_COORDENADAS = "com.aldo.aget.rscliente.Mapa.EnviarCoordenadas";
 
+
+    public static final String INTENT_INICIO_RECUPERAR_CLAVE = "com.aldo.aget.rscliente.Vistas.Inicio.recuperar.pass";
 
 
 
@@ -54,6 +64,7 @@ public class Configuracion extends Activity {
     public static final String TABLA_ENLACE = "enlace";
     public static final String TABLA_DEPARTAMENTO = "departamento";
     public static final String TABLA_USUARIOS = "usuarios";
+    public static final String TABLA_CORREO = "correo";
 
     //    Columnas
 //GPS

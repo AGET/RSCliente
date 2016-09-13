@@ -50,6 +50,7 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa);
 
+        Log.v("AGET-MAPA","ACTIVIDAD INICIADA");
         Bundle parametros = getIntent().getExtras();
         numero = parametros.getString(Configuracion.COLUMNA_GPS_NUMERO);
         latitud = parametros.getDouble(Configuracion.LATITUD);
@@ -87,6 +88,7 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap map) {
+        Log.v("AGET-MAPA","MOSTRADO");
 
         String[] filtroLocal = {SQLHelper.COLUMNA_GPS_DESCRIPCION};
         String[] datosWhere = {numero};

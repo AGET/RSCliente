@@ -72,7 +72,7 @@ public class Inicio extends AppCompatActivity implements AdapterView.OnItemClick
 
         peticionLista();
 
-
+        mostrarDatos();
     }
 
     @Override
@@ -320,5 +320,56 @@ public class Inicio extends AppCompatActivity implements AdapterView.OnItemClick
         Intent inten = new Intent(this, MainActivity.class);
         startActivity(inten);
         finish();
+    }
+
+    public void  mostrarDatos(){
+        managerBD = new ManipulacionBD(this);
+        ArrayList lista = new ArrayList();
+
+        String[] valorFiltro = {
+                SQLHelper.COLUMNA_USUARIO_ID,
+                SQLHelper.COLUMNA_USUARIO_NOMBRE,
+                SQLHelper.COLUMNA_USUARIO_AP_PATERNO,
+                SQLHelper.COLUMNA_USUARIO_AP_MATERNO,
+                SQLHelper.COLUMNA_USUARIO_TELEFONO,
+                SQLHelper.COLUMNA_USUARIO_CORREO,
+                SQLHelper.COLUMNA_USUARIO_CONTRASE_NA,
+                SQLHelper.COLUMNA_USUARIO_DEPARTAMENTO_ID,
+                SQLHelper.COLUMNA_USUARIO_DEPARTAMENTO_NOMBRE,
+                SQLHelper.COLUMNA_USUARIO_EMPRESA_ID,
+                SQLHelper.COLUMNA_USUARIO_EMPRESA_NOMBRE,
+                SQLHelper.COLUMNA_USUARIO_EMPRESA_STATUS
+        };
+
+        lista = (managerBD.obtenerDatos(SQLHelper.TABLA_USUARIOS, valorFiltro, null, null));
+
+        Log.v("AGET-CONTENIDO","TABLA-USUARIOS");
+
+        for(int i = 0 ;i< lista.size();i++){
+        Log.v("AGET-CONTENIDO",lista.get(i).toString()) ;
+        }
+        lista =null;
+
+
+        String[] valorFiltro2 = {
+                SQLHelper.COLUMNA_GENERICA_ID ,
+                SQLHelper.COLUMNA_GPS_ENLACE_ID,
+                SQLHelper.COLUMNA_USUARIO_ID,
+                SQLHelper.COLUMNA_USUARIO_NOMBRE,
+                SQLHelper.COLUMNA_GPS_ID,
+                SQLHelper.COLUMNA_GPS_IMEI,
+                SQLHelper.COLUMNA_GPS_NUMERO,
+                SQLHelper.COLUMNA_GPS_DESCRIPCION,
+                SQLHelper.COLUMNA_GPS_DEPARTAMENTO
+        };
+
+        lista = (managerBD.obtenerDatos(SQLHelper.TABLA_GPS, valorFiltro2, null, null));
+
+        Log.v("AGET-CONTENIDO","TABLA-GPS");
+
+        for(int i = 0 ;i< lista.size();i++){
+            Log.v("AGET-CONTENIDO",lista.get(i).toString());
+        }
+
     }
 }

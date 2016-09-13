@@ -78,7 +78,7 @@ public class RecibirSMS extends BroadcastReceiver {
 
 // Launch the new activity and add the additional flags to the intent
                     contexto.getApplicationContext().startActivity(i);
-                    Log.v("AGET-MAPA","MAPA LANZADO");
+                    Log.v("AGET-MAPA", "MAPA LANZADO");
 
                 }
             }
@@ -222,9 +222,21 @@ public class RecibirSMS extends BroadcastReceiver {
         String[] valor = {numRemit};
         if (managerBD.obtenerDatos(SQLHelper.TABLA_GPS, datos, SQLHelper.COLUMNA_GPS_NUMERO, valor) != null) {
             numero = (String) (managerBD.obtenerDatos(SQLHelper.TABLA_GPS, datos, SQLHelper.COLUMNA_GPS_NUMERO, valor)).get(0);
+            Log.v("AGET-NUMERO", "ENCONTRADO");
             return true;
         } else {
-            return false;
+            Log.v("AGET-NUMERO", "NO ENCONTRADO");
+            String numtel = numRemit.substring(3, 13);
+            String[] valor2 = {numtel};
+            Log.v("AGET-NUMERO", "SUBSTRING" + valor2[0]);
+            if (managerBD.obtenerDatos(SQLHelper.TABLA_GPS, datos, SQLHelper.COLUMNA_GPS_NUMERO, valor2) != null) {
+                numero = (String) (managerBD.obtenerDatos(SQLHelper.TABLA_GPS, datos, SQLHelper.COLUMNA_GPS_NUMERO, valor2)).get(0);
+                Log.v("AGET-NUMERO", "ENCONTRADO");
+                return true;
+            } else {
+                Log.v("AGET-NUMERO", "NO ENCONTRADO en intento 2");
+                return false;
+            }
         }
     }
 

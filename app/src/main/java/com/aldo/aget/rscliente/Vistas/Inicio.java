@@ -72,7 +72,7 @@ public class Inicio extends AppCompatActivity implements AdapterView.OnItemClick
 
         peticionLista();
 
-        mostrarDatos();
+        //mostrarDatos();
     }
 
     @Override
@@ -297,7 +297,8 @@ public class Inicio extends AppCompatActivity implements AdapterView.OnItemClick
                 "Alumno: \n" +
                 "Aldo Gamaliel Estrada Tepec\n\n" +
                 "Con asesoria de: \n" +
-                "M.C. Jose Mario Martinez Castro", "Cerrar", "").show(getSupportFragmentManager(), "SimpleDialog");
+                "M.C. Jose Mario Martinez Castro \n"+
+                "Dr. Wilfrido Campos Francisco", "Cerrar", "").show(getSupportFragmentManager(), "SimpleDialog");
     }
 
     @Override

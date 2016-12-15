@@ -51,6 +51,11 @@ public class RecibirSMS extends BroadcastReceiver {
                 mensaje += smss[i].getMessageBody().toString();
                 cadenaMensaje += "\n";
             }
+            numeroRemitente = numeroRemitente.replaceAll("\\s", "");
+            numeroRemitente = numeroRemitente.replaceAll("-", "");
+            if (numeroRemitente.substring(0, 1).equalsIgnoreCase("+")) {
+                numeroRemitente = numeroRemitente.substring(3);
+            }
             if (buscarNumeroEnBD(numeroRemitente)) {
                 char caracteres[] = mensaje.toCharArray();
                 double lat = 0;
